@@ -22,18 +22,16 @@
 
         // Display decoded result when the page loads
         window.onload = function() {
-            const base64Text = getURLParameter("base64");
+            const base64Text = getURLParameter("in");
             if (base64Text) {
-                document.getElementById("output").innerText = decodeBase64(base64Text);
+                document.getElementById("out").innerText = decodeBase64(base64Text);
             } else {
-                document.getElementById("output").innerText = "No Base64 text found in URL";
+                document.getElementById("out").innerText = "No Base64 text found in URL";
             }
         };
     </script>
 </head>
 <body>
-    <h1>Base64 Decoder</h1>
-    <p>Decoded Output:</p>
-    <pre id="output"></pre>
+    <h1 id="out"></h1>
 </body>
 </html>

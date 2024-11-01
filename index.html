@@ -14,9 +14,12 @@
         // Function to decode Base64
         function decodeBase64(base64Text) {
             try {
-                return atob(base64Text);
+                // Decode base64 to bytes
+                const bytes = Uint8Array.from(atob(base64Text), c => c.charCodeAt(0));
+                // Convert bytes to UTF-8 string
+                return new TextDecoder('utf-8').decode(bytes);
             } catch (e) {
-                return "Invalid Base64 string";
+                return "Invalid Base64 or UTF-8 string";
             }
         }
 

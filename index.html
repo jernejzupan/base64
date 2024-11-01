@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Decoder</title>
+    <script>
+        // Function to get the value of a URL parameter
+        function getURLParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Function to decode Base64
+        function decodeBase64(base64Text) {
+            try {
+                return atob(base64Text);
+            } catch (e) {
+                return "Invalid Base64 string";
+            }
+        }
+
+        // Display decoded result when the page loads
+        window.onload = function() {
+            const base64Text = getURLParameter("base64");
+            if (base64Text) {
+                document.getElementById("output").innerText = decodeBase64(base64Text);
+            } else {
+                document.getElementById("output").innerText = "No Base64 text found in URL";
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Base64 Decoder</h1>
+    <p>Decoded Output:</p>
+    <pre id="output"></pre>
+</body>
+</html>

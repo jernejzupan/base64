@@ -1,40 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 Decoder</title>
+    <title>Santa Decoder</title>
     <script>
+
+        function decode(scrambled) {
+            let seed = parseInt(scrambled.substr(0, 2), 16)
+            scrambled = scrambled.substr(2)
+
+            let array = []
+
+            // Reverse the XOR operation on each pair of hex digits
+            for (let i = 0; i < scrambled.length; i += 2) {
+                const hexPair = scrambled.substring(i, i + 2); // Take two hex characters
+                array.push(parseInt(hexPair, 16) ^ seed)
+            }
+
+            return new TextDecoder().decode(new Uint8Array(array))
+        }
+
         // Function to get the value of a URL parameter
         function getURLParameter(name) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(name);
         }
 
-        // Function to decode Base64
-        function decodeBase64(base64Text) {
-            try {
-                // Decode base64 to bytes
-                const bytes = Uint8Array.from(atob(base64Text), c => c.charCodeAt(0));
-                // Convert bytes to UTF-8 string
-                return new TextDecoder('utf-8').decode(bytes);
-            } catch (e) {
-                return "Invalid Base64 or UTF-8 string";
-            }
-        }
 
         // Display decoded result when the page loads
-        window.onload = function() {
-            const base64Text = getURLParameter("in");
-            if (base64Text) {
-                document.getElementById("out").innerText = decodeBase64(base64Text);
+        window.onload = function () {
+            let scrambled = getURLParameter("in");
+            if (scrambled) {
+                document.getElementById("out").innerText = decode(scrambled);
             } else {
-                document.getElementById("out").innerText = "No Base64 text found in URL";
+                document.getElementById("out").innerText = "Error";
             }
         };
     </script>
 </head>
+
 <body>
     <h1 id="out"></h1>
 </body>
+
 </html>
